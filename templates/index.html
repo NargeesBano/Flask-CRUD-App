@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Link to CSS file -->
+    <title>Document</title>
+</head>
+<body>
+    <!-- <h1>Hello , This is my Home Page</h1>
+    <a href="/about"><button>About</button></a> -->
+    
+    <div class="header_container">
+        <h1>User Managemenet</h1>
+    </div>
+    
+    <div class="button_container">
+        <!-- <button type="submit">Create</button>
+        <button>Read</button>
+        <button>Update</button>
+        <button>Delete</button> -->
+        {% if error %}
+            <div style="color: red;">{{ error }}</div>
+        {% endif %}
+        <form action="/submit" method="POST">
+            <div>
+                <input type="text" name="name" placeholder="Enter name" required>
+            </div>
+            <div>
+                <input type="number" name="age" placeholder="Enter age" min="1" required>
+            </div>
+            <div>
+                <input type="text" name="location" placeholder="Enter location" required>
+            </div>
+            <div>
+                <input type="submit" value="Create User">
+            </div>
+        </form>
+
+    </div>
+
+    
+
+    <table>
+        <thead>
+            <tr>               
+                <th>Name</th>
+                <th>Age</th>
+                <th>Location</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>                    
+        </thead>
+        <tbody>  
+            {% if data | length == 0 %}  <!-- Check if data is empty -->
+                <tr>
+                    <td colspan="6" style="text-align: center;">No data available</td>  <!-- Message for no data -->
+                </tr>
+            {% else %}          
+                {% for user in data %}
+                    <tr>
+                        <td>{{ user['name'] }}</td>
+                        <td>{{ user['age'] }}</td>
+                        <td>{{ user['location'] }}</td>
+                        <td><a href="/edit/{{ user['id'] }}"><button>Edit</button></a></td> <!-- Edit button -->
+                        <td><form action="/delete/{{ user['id'] }}" method="POST" style="display:inline;"> <!-- Delete form -->
+                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this user?');">
+                        </form></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</body>
+</html>
