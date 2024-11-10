@@ -12,7 +12,7 @@ def my_connect_db():
     return mysql.connector.connect(
         host='localhost',
         user='root',  # replace with your MySQL username
-        password='1106@MySql',  # replace with your MySQL password
+        password='abcd',  # replace with your MySQL password
         database='my_flask_app'  # replace with your database name
     )
 
